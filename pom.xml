@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.3</version>
+        <relativePath/>
+    </parent>
+    
+    <groupId>com.bitjawsbill</groupId>
+    <artifactId>bitjawsbill</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>bitjawsbill</name>
+    <description>BitJawsBill Project</description>
+    
+    <properties>
+        <java.version>17</java.version>
+        <project.basedir>${basedir}</project.basedir>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+  <!-- API JAXB compatible con Jakarta -->
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+		<!-- Implementación de referencia de JAXB -->
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- JWT Dependencies -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.5</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- SpringDoc OpenAPI UI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>xjc-3.2</id>
+						<phase>none</phase>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>${project.basedir}/src/main/xsd/3.2</schemaDirectory>
+							<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+							<clearOutputDir>false</clearOutputDir>
+							<packageName>com.bitjawsbill.facturae.xml.v3_2</packageName>
+							<extension>true</extension>
+							<encoding>UTF-8</encoding>
+							<bindingFiles>
+								<bindingFile>${project.basedir}/src/main/xjb/bindings.xjb</bindingFile>
+							</bindingFiles>
+							<args>
+								<arg>-Djakarta.xml.accessExternalDTD=all</arg>
+								<arg>-Djakarta.xml.accessExternalSchema=all</arg>
+								<arg>-Djavax.xml.accessExternalDTD=all</arg>
+								<arg>-Djavax.xml.accessExternalSchema=all</arg>
+							</args>							
+							<systemProperties>
+								<jakarta.xml.accessExternalDTD>all</jakarta.xml.accessExternalDTD>
+								<jakarta.xml.accessExternalSchema>all</jakarta.xml.accessExternalSchema>
+								<javax.xml.accessExternalDTD>all</javax.xml.accessExternalDTD>
+								<javax.xml.accessExternalSchema>all</javax.xml.accessExternalSchema>
+							</systemProperties>
+						</configuration>
+					</execution>
+					<execution>
+						<id>xjc-3.2.1</id>
+						<phase>none</phase>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>${project.basedir}/src/main/xsd/3.2.1</schemaDirectory>
+							<outputDirectory>${project.basedir}/src/main/java/com/bitjawsbill/facturae/xml/v3_2_1</outputDirectory>
+							<clearOutputDir>false</clearOutputDir>
+							<packageName>com.bitjawsbill.facturae.xml.v3_2</packageName>
+							<extension>true</extension>
+							<encoding>UTF-8</encoding>
+							<bindingFiles>
+								<bindingFile>${project.basedir}/src/main/xjb/bindings.xjb</bindingFile>
+							</bindingFiles>
+							<args>
+								<arg>-Djakarta.xml.accessExternalDTD=all</arg>
+								<arg>-Djakarta.xml.accessExternalSchema=all</arg>
+								<arg>-Djavax.xml.accessExternalDTD=all</arg>
+								<arg>-Djavax.xml.accessExternalSchema=all</arg>
+							</args>							
+							<systemProperties>
+								<jakarta.xml.accessExternalDTD>all</jakarta.xml.accessExternalDTD>
+								<jakarta.xml.accessExternalSchema>all</jakarta.xml.accessExternalSchema>
+								<javax.xml.accessExternalDTD>all</javax.xml.accessExternalDTD>
+								<javax.xml.accessExternalSchema>all</javax.xml.accessExternalSchema>
+							</systemProperties>
+						</configuration>
+					</execution>
+					<execution>
+						<id>xjc-3.2.2</id>
+						<phase>none</phase>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>${project.basedir}/src/main/xsd/3.2.2</schemaDirectory>
+							<outputDirectory>${project.basedir}/src/main/java/com/bitjawsbill/facturae/xml/v3_2_2</outputDirectory>
+							<clearOutputDir>false</clearOutputDir>
+							<packageName>com.bitjawsbill.facturae.xml.v3_2</packageName>
+							<extension>true</extension>
+							<encoding>UTF-8</encoding>
+							<bindingFiles>
+								<bindingFile>${project.basedir}/src/main/xjb/bindings.xjb</bindingFile>
+							</bindingFiles>
+							<args>
+								<arg>-Djakarta.xml.accessExternalDTD=all</arg>
+								<arg>-Djakarta.xml.accessExternalSchema=all</arg>
+								<arg>-Djavax.xml.accessExternalDTD=all</arg>
+								<arg>-Djavax.xml.accessExternalSchema=all</arg>
+							</args>							
+							<systemProperties>
+								<jakarta.xml.accessExternalDTD>all</jakarta.xml.accessExternalDTD>
+								<jakarta.xml.accessExternalSchema>all</jakarta.xml.accessExternalSchema>
+								<javax.xml.accessExternalDTD>all</javax.xml.accessExternalDTD>
+								<javax.xml.accessExternalSchema>all</javax.xml.accessExternalSchema>
+							</systemProperties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+        </plugins>
+    </build>
+</project> 

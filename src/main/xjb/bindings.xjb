@@ -1,0 +1,10 @@
+<jxb:bindings xmlns:jxb="https://jakarta.ee/xml/ns/jaxb"
+              xmlns:xs="http://www.w3.org/2001/XMLSchema"
+              jxb:version="3.0">
+  <jxb:globalBindings>
+    <jxb:javaType name="java.time.LocalDate"
+                  xmlType="xs:date"
+                  parseMethod="java.time.LocalDate.parse"
+                  printMethod="toString"/>
+  </jxb:globalBindings>
+</jxb:bindings>
